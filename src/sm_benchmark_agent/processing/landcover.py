@@ -9,6 +9,30 @@ COLLECTION = 'MODIS/061/MCD12Q1'
 NATIVE_CRS = '+proj=sinu +R=6371007.181 +nadgrids=@null +wktext'
 
 
+def effective_source_crs(source):
+    """Correct the known GEE MODIS WKT only on a verified native pixel lattice."""
+    import math
+    from pyproj import CRS
+    crs = CRS.from_user_input(source.crs)
+    if source.crs.to_epsg() == 6933:
+        return source.crs  # Prepared, already projected inputs retain their CRS.
+    op = crs.coordinate_operation
+    if op is None or op.method_name.lower() != 'sinusoidal':
+        raise ValueError('Unreviewed MCD12Q1 source projection')
+    params = {p.name.lower(): p.value for p in op.params}
+    if any(abs(v) > 1e-8 for k, v in params.items() if 'longitude' in k or 'easting' in k or 'northing' in k):
+        raise ValueError('Unexpected MODIS projection origin')
+    t = source.transform
+    spacing = 463.3127165279165
+    if not (math.isclose(t.a, spacing, abs_tol=1e-6, rel_tol=0) and
+            math.isclose(t.e, -spacing, abs_tol=1e-6, rel_tol=0) and t.b == 0 and t.d == 0):
+        raise ValueError('Source is not the native MCD12Q1 lattice')
+    for value in ((t.c + 20015109.354)/spacing, (10007554.677003 - t.f)/spacing):
+        if abs(value-round(value)) > 1e-5:
+            raise ValueError('Misaligned MODIS native origin')
+    return NATIVE_CRS
+
+
 def derive_landcover(payload, target, context, year):
     import numpy as np
     import rasterio
@@ -24,11 +48,23 @@ def derive_landcover(payload, target, context, year):
     with MemoryFile(payload) as memory, memory.open() as source:
         if source.count != 1 or source.crs is None:
             raise ValueError('Expected one georeferenced LC_Type1 band')
-        values = source.read(1)
-        normalized = np.where((values >= 1) & (values <= 17), values, 255).astype('uint8')
+        src_crs = effective_source_crs(source)
+        # Check geometrical coverage independently of class values and masks.
+        coverage = np.zeros((26, 26), dtype='uint8')
+        reproject(source=np.ones(source.shape, dtype='uint8'), destination=coverage,
+                  src_transform=source.transform, src_crs=src_crs, src_nodata=0,
+                  dst_transform=transform, dst_crs='EPSG:6933', dst_nodata=0,
+                  resampling=Resampling.nearest)
+        if not np.all(coverage):
+            raise ValueError('MCD12Q1 source does not cover the requested context; inspect projection/extent')
+        masked = source.read(1, masked=True)
+        values = masked.data
+        valid = (~np.ma.getmaskarray(masked) & np.isfinite(values) &
+                 (values >= 1) & (values <= 17) & (values == np.floor(values)))
+        normalized = np.where(valid, values, 255).astype('uint8')
         destination = np.full((26, 26), 255, dtype='uint8')
         reproject(source=normalized, destination=destination,
-                  src_transform=source.transform, src_crs=source.crs, src_nodata=255,
+                  src_transform=source.transform, src_crs=src_crs, src_nodata=255,
                   dst_transform=transform, dst_crs='EPSG:6933', dst_nodata=255,
                   resampling=Resampling.nearest)
     with rasterio.open(target, 'w', driver='GTiff', width=26, height=26, count=1,
@@ -37,7 +73,8 @@ def derive_landcover(payload, target, context, year):
         output.write(destination, 1)
         output.set_band_description(1, f'{year}_LC_Type1')
         output.update_tags(collection=COLLECTION, year=str(year), classification='IGBP',
-                           valid_classes='1-17', resampling='nearest')
+                           valid_classes='1-17', resampling='nearest',
+                           source_crs_override=str(src_crs))
         output.update_tags(1, year=str(year), variable='LC_Type1', classification='IGBP')
 
 

@@ -94,6 +94,29 @@ sentinel-like values.
 
 ## Verification and remaining work
 
+### MCD12Q1 projection correction
+
+The GEE native Sinusoidal TIFF may report a WGS84 ellipsoid even though its
+pixel transform belongs to the MODIS sphere. The LC_Type1 processor now checks
+the 463.3127165 m native spacing, zero rotation and global lattice origin before
+using the authoritative sphere (radius 6371007.181 m). Already projected
+EPSG:6933 inputs retain their own CRS. Other projections fail for review instead
+of being guessed. Nearest-neighbor categorical sampling remains unchanged.
+
+Source masks and declared nodata are honored even when their stored numeric
+value falls within class codes 1–17. Geometrical coverage is checked independently
+of masks; a non-covering raster is a processing error, not `no_valid_values`.
+A fully masked but correctly covering raster can still be genuinely unavailable.
+
+Old processed context caches have incompatible processing hashes and must not
+be reused as validated output. Use a new cache/output scope and review old
+`no_valid_values` results. This correction does not modify published V1 packages.
+A live-downloaded 2020 LC_Type1 sample near 106 W, 36 N changed from zero to
+676 valid output cells. Tests also compare independent point-based nearest
+sampling at three latitudes, both correct and mislabelled native WKT, masks,
+wrong extents and unknown projections. This is bounded source evidence, not
+global or full-context live acceptance.
+
 The migrated SRTM/HWSD2 scientific tests and context adapter tests run without
 network access. Tests include source masks, categorical values, corrected HWSD2
 weights, wrong/corrupt inputs, interruption after download, raw checkpoint reuse,

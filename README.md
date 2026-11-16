@@ -95,6 +95,11 @@ See [usage examples](docs/usage-examples.md),
 
 ### Verified
 
+- MCD12Q1 native-projection correction: a real GEE sample exposed a mislabeled
+  Sinusoidal WKT that previously produced false missing data. Native lattice
+  checks, sphere-aware reprojection, mask preservation and extent validation
+  now cover this path. See [context correction](docs/context-preparation.md#mcd12q1-projection-correction).
+
 - SMAP L3 integration: 98 regression tests, installed-wheel checks, exact-period
   mixed-source assembly and network-blocked replay of actual SMAP/ERA5/context
   data passed. Existing station-bearing ZIP augmentation also passed. See
