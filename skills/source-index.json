@@ -7,6 +7,14 @@
     "mcd12q1"
   ],
   "workflows": {
+    "hls": {
+      "command": "sm-benchmark-prepare",
+      "guide": "docs/hls-preparation.md",
+      "example": "configs/hls-request.example.json",
+      "extra": "hls",
+      "scope": "experimental HLS S30 v2.0; one anchor/year or exact dates; absent targets and reviewed contexts; extension only",
+      "requires_context": true
+    },
     "contexts": {
       "command": "sm-benchmark-context",
       "subcommand": "prepare",
@@ -75,6 +83,12 @@
     }
   },
   "sources": {
+    "hls_s30": {
+      "skill": "skills/prepare-hls-s30/SKILL.md",
+      "profile_id": "hls-s30-v2-50m-screened-v1",
+      "workflow": "hls",
+      "provider": "NASA Earthdata / LP DAAC HTTPS COG"
+    },
     "srtm": {
       "skill": "skills/prepare-srtm/SKILL.md",
       "profile_id": "srtm-v1-horn-six-band",
@@ -163,6 +177,7 @@
     "example": "configs/multi-request.example.json",
     "scope": "one anchor/year; absent targets; selected dynamic sources and reviewed contexts",
     "sources": [
+      "hls_s30",
       "gldas21",
       "mod13q1_ndvi",
       "myd13q1_ndvi",

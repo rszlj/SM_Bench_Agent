@@ -18,6 +18,18 @@ from .grid import anchor_cell_from_id, context_grid, ContextResolution
 CONTEXT_SOURCES = {'srtm', 'hwsd2', 'mcd12q1'}
 
 
+def same_anchor_metadata(actual, expected):
+    """Keep projected grid exact; tolerate sub-centimetre PROJ inverse differences."""
+    import math
+    angular = {'centre_longitude', 'centre_latitude'}
+    if set(actual) != set(expected):
+        return False
+    return (all(actual[k] == expected[k] for k in expected if k not in angular)
+            and all(isinstance(actual[k], (int, float))
+                    and math.isclose(actual[k], expected[k], rel_tol=0, abs_tol=1e-7)
+                    for k in angular))
+
+
 def check_public_metadata(value):
     if isinstance(value, dict):
         if {str(k).lower() for k in value} & {'project', 'project_id', 'account', 'credentials', 'token', 'access_token', 'private_key', 'client_email'}:
@@ -66,7 +78,7 @@ def checked_context(path, anchor_id, year):
                 raise ValueError('Grid must be metadata')
             grid = json.loads(source.read_text(encoding='utf-8'))
             check_public_metadata(grid)
-            if grid['anchor'] != asdict(anchor):
+            if not same_anchor_metadata(grid['anchor'], asdict(anchor)):
                 raise ValueError('Context grid anchor metadata mismatch')
             grid_count += 1
         elif name == f'metadata/source_manifests/{source_id}.json' and source_id in CONTEXT_SOURCES:

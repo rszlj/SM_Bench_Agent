@@ -31,7 +31,7 @@ and configuration files. Python 3.11+ is a runtime requirement: if it is missing
 the agent helps you install it using a method appropriate for your computer.
 Agent software, network access and provider access remain prerequisites.
 
-The entry skill coordinates thirteen separate source skills and reads only those
+The entry skill coordinates fourteen separate source skills and reads only those
 needed for your request. Setup and delivery rules are shared; users still interact
 with one agent. See [skill organization](docs/skill-layout.md) for maintenance details.
 
@@ -72,10 +72,13 @@ shared agent instructions and source-specific skills.
 
 ### Implemented
 
-- Thirteen source adapters: SRTM, HWSD2, MCD12Q1, GLDAS, ERA5-Land, IMERG,
+- Thirteen established source adapters: SRTM, HWSD2, MCD12Q1, GLDAS, ERA5-Land, IMERG,
   separate Terra/Aqua NDVI and LST, Sentinel-1, SMAP L4 v007 and SMAP L3 V006.
   L3 supplies native-cell AM/PM soil moisture and H/V brightness temperature
   through Earthdata/Harmony. See [setup and profile](docs/smap-l3-preparation.md).
+- One experimental opt-in adapter: [HLS S30 v2.0](docs/hls-preparation.md),
+  Earthdata COG access, bounded range retries and local 50 m processing. One
+  full anchor-year has passed live delivery checks. No V1 backfill; HLS L30 is not included.
 - Unified multi-source preparation for one anchor cell and a date range within
   one year, with matching prepared contexts and absent station targets.
   Inclusive UTC start/end dates are honored; full-year requests remain supported.
@@ -94,6 +97,12 @@ See [usage examples](docs/usage-examples.md),
 [Python environment handling](docs/python-environment.md).
 
 ### Verified
+
+- HLS S30 annual acceptance (2026-11-19): all 119 discovered 2022 granules at
+  `EASE2_M09km_R0285_C3179` were processed and packaged. File checksums, grid,
+  band schema and annual manifest membership passed. Quality screening leaves
+  32 granules with no eligible reflectance; these remain explicit missing data.
+  See [HLS acceptance](docs/hls-preparation.md#annual-live-acceptance-2026-11-19).
 
 - MCD12Q1 native-projection correction: a real GEE sample exposed a mislabeled
   Sinusoidal WKT that previously produced false missing data. Native lattice

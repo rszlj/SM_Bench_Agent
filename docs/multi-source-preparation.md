@@ -1,5 +1,9 @@
 # Unified source preparation and annual delivery
 
+The opt-in experimental `hls_s30` adapter also uses this unified workflow, with
+Earthdata HTTPS COGs and local processing instead of GEE. See
+[HLS profile and limits](hls-preparation.md). HLS is not part of V1.
+
 `sm-benchmark-prepare` prepares selected sources through the existing registered
 adapters and assembles one annual ZIP. It supports GLDAS, four separate Terra/Aqua
 MODIS sources, ERA5-Land, IMERG, Sentinel-1, SMAP L4 and SMAP L3, plus the three reviewed

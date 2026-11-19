@@ -18,7 +18,8 @@ guides and code is not a supported standalone distribution.
 | Source guides in `docs/` | Exact commands, technical profiles, resource limits and evidence | For the selected workflow |
 | Python adapters | Executable processing and validation | Through the documented tools |
 
-There are thirteen source skills, one for each implemented adapter. Terra/Aqua NDVI
+There are fourteen source skills, including the experimental extension-only HLS
+S30 adapter. Terra/Aqua NDVI
 and day/night LST have separate skill entry points and share the MODIS guide and
 processing helpers. SRTM/HWSD2/MCD12Q1 similarly have separate scientific guidance
 but share the context command. SMAP L4 has a separate legacy-sampling skill. The index retains ISMN as an unimplemented V1 catalogue identity, outside current migration scope;

@@ -1,0 +1,8 @@
+{
+  "spatial": {"anchor_ids": ["EASE2_M09km_R0169_C1995"]},
+  "start": "2020-06-01",
+  "end": "2020-06-07",
+  "sources": ["hls_s30"],
+  "station_targets": "absent",
+  "output_root": "outputs/hls-extension"
+}

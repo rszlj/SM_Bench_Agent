@@ -14,6 +14,8 @@ from sm_benchmark_agent.timeseries_sources import TimeSeriesAdapter
 from sm_benchmark_agent.sentinel1_sources import Sentinel1Adapter
 from sm_benchmark_agent.smap_sources import SMAPL4Adapter
 from sm_benchmark_agent.smap_l3_adapter import SMAPL3Adapter
+from sm_benchmark_agent.hls_adapter import HLSAdapter
+from test_hls import Provider as HLSProvider
 from test_smap_l3_adapter import L3Step
 from sm_benchmark_agent.archives import verify_archive
 from sm_benchmark_agent.adapters import SourceUnit
@@ -50,6 +52,7 @@ class MultiTests(unittest.TestCase):
         sm=SMProvider(fail=5)
         mod=MODISProvider()
         adapters={'gldas21':GLDAS21Adapter(provider=FakeProvider()),
+                  'hls_s30':HLSAdapter(provider=HLSProvider()),
                   'era5_land':TimeSeriesAdapter('era5_land',provider=ts),
                   'imerg_v07':TimeSeriesAdapter('imerg_v07',provider=ts),
                   'sentinel1':Sentinel1Adapter(provider=S1Provider()),
@@ -133,6 +136,7 @@ class MultiTests(unittest.TestCase):
         req.pop('years'); req.update(start='2015-04-01',end='2015-04-30')
         ts=TSProvider(); gp=FakeProvider(); sm=SMProvider()
         adapters={'gldas21':GLDAS21Adapter(provider=gp),
+                  'hls_s30':HLSAdapter(provider=HLSProvider()),
                   'era5_land':TimeSeriesAdapter('era5_land',provider=ts),
                   'imerg_v07':TimeSeriesAdapter('imerg_v07',provider=ts),
                   'sentinel1':Sentinel1Adapter(provider=PeriodS1()),

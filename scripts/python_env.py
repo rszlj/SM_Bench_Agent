@@ -11,6 +11,7 @@ import tomllib
 ROOT = Path(__file__).resolve().parents[1]
 RECORD = Path('.local/python-environment.json')
 MODULES = {'core': ['pyproj'], 'gldas': ['ee', 'pyarrow', 'rasterio'],
+           'hls': ['earthaccess', 'rasterio', 'numpy'],
            'earthdata': ['harmony'], 'smap_l3': ['harmony', 'h5py', 'astropy', 'pyarrow'],
            'contexts': ['ee', 'rasterio', 'numpy', 'access_parser', 'osgeo.gdal'],
            'modis': ['ee', 'rasterio', 'numpy', 'osgeo.gdal'],

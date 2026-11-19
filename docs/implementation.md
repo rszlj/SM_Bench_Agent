@@ -27,9 +27,14 @@ The Python namespace is `sm_benchmark_agent` and does not overlap the old toolki
 
 ## Adapter boundary
 
+An experimental fourteenth adapter, `hls_s30`, adds Earthdata COG access and
+local 50 m processing to unified delivery, without changing V1. See
+[HLS profile and limits](hls-preparation.md). The original thirteen adapters
+described below retain their existing profiles.
+
 `adapters.py` defines `plan`, `prepare`, `validate`. The default registry now
-contains thirteen adapters: GLDAS, SRTM/HWSD2/MCD12Q1, four separate Terra/Aqua
-NDVI/LST sources, ERA5-Land, IMERG, Sentinel-1, SMAP L4 and SMAP L3. L3 uses
+contains fourteen adapters: GLDAS, SRTM/HWSD2/MCD12Q1, four separate Terra/Aqua
+NDVI/LST sources, ERA5-Land, IMERG, Sentinel-1, SMAP L4, SMAP L3 and HLS S30. L3 uses
 Earthdata/Harmony with the unified preparation/validation/assembly interface.
 See [L3 setup and profile](smap-l3-preparation.md). Sentinel-1 uses
 `sm-benchmark-sentinel1` with bounded discovery and acquisition checkpoints;
@@ -68,6 +73,11 @@ comparison with V1 and relocated package verification. See
 multi-source validation remains pending.
 
 ## Next acceptance gates
+
+HLS acceptance update (2026-11-19): one full 2022 anchor-year now passes live
+retrieval and annual archive verification (119 granules). The unified registry
+uses the tested bounded range-retry provider by default. This does not install
+a system scheduler or change fixed V1. See [HLS evidence](hls-preparation.md#annual-live-acceptance-2026-11-19).
 
 The [source-tool migration audit](source-tool-audit.md) inventories all 13 V1
 source IDs, reusable legacy routes, profile differences and public-readiness gaps.

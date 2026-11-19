@@ -86,11 +86,14 @@ def default_registry():
     from .sentinel1_sources import Sentinel1Adapter
     from .smap_sources import SMAPL4Adapter
     from .smap_l3_adapter import SMAPL3Adapter
+    from .hls_adapter import HLSAdapter
+    from .hls_resilience import ResilientEarthdataHLS
     registry = AdapterRegistry()
     registry.register(GLDAS21Adapter())
     registry.register(Sentinel1Adapter())
     registry.register(SMAPL4Adapter())
     registry.register(SMAPL3Adapter())
+    registry.register(HLSAdapter(provider=ResilientEarthdataHLS()))
     for source in PROFILES:
         registry.register(ContextAdapter(source))
     for source in MODIS_PROFILES:

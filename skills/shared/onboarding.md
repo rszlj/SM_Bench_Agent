@@ -1,5 +1,9 @@
 # Shared onboarding and provider configuration
 
+For experimental HLS S30, use the `hls` extra and the same home Earthdata `.netrc`
+entry as SMAP L3, following the [HLS guide](../../docs/hls-preparation.md).
+HLS uses LP DAAC HTTPS COG access, not Harmony or GEE; verify that route separately.
+
 Use this when the user says "help me start", when dependencies are missing, or
 when an authorized route needs provider access. Use the user's language; expose
 only the next necessary human action. Do not give beginners a shell-command
