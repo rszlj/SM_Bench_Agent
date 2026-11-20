@@ -11,6 +11,7 @@ requires-python = ">=3.11"
 dependencies = ["pyproj>=3.6,<4"]
 
 [project.optional-dependencies]
+nisar = ["requests>=2.31,<3", "h5py>=3.12,<4", "rasterio>=1.4,<2", "numpy>=1.26"]
 hls = ["earthaccess>=0.15,<1", "rasterio>=1.4,<2", "numpy>=1.26"]
 earthdata = ["harmony-py>=1.8,<2"]
 smap_l3 = ["harmony-py>=1.8,<2", "h5py>=3.12,<4", "astropy>=7,<9", "pyarrow>=15"]

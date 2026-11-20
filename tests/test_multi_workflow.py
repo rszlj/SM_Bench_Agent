@@ -43,7 +43,7 @@ class MultiTests(unittest.TestCase):
              'sources':list(CP),'output_root':str(self.root/'contexts')}
         p=plan_contexts(req,asset_root=self.root/'cc',release_id='multi-test-v1',hwsd_cache=soil,adapters=adapters)
         context=execute_contexts(p,accepted_plan_id=p['plan_id'],adapters=adapters)['context_plan']
-        req.update(sources=sorted(SOURCES),output_root=str(self.root/'delivery'))
+        req.update(sources=sorted(SOURCES-{'nisar_gcov'}),output_root=str(self.root/'delivery'))
         return req,dict(context_plan=context,asset_root=self.root/'cache')
 
     def test_all_sources_failure_resume_relocation_and_scope_conflict(self):
@@ -85,7 +85,7 @@ class MultiTests(unittest.TestCase):
                     self.assertEqual(z.read(name),path.read_bytes())
                 self.assertIn(f'metadata/source_manifests/{source}.json',names)
             provenance=json.loads(z.read('metadata/multi_extension.json'))
-            self.assertEqual(set(provenance['validation']),SOURCES)
+            self.assertEqual(set(provenance['validation']),SOURCES-{'nisar_gcov'})
             self.assertIn('smap_l4',provenance['limitations'])
         fresh=plan_multi(req,adapters=adapters,**kwargs)
         self.assertEqual(execute_multi(fresh,accepted_plan_id=fresh['plan_id'],adapters=adapters)['status'],'reused')

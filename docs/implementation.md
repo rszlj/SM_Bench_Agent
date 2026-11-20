@@ -27,6 +27,12 @@ The Python namespace is `sm_benchmark_agent` and does not overlap the old toolki
 
 ## Adapter boundary
 
+NISAR update (2026-11-20): the fifteenth adapter, `nisar_gcov`, supports the
+Validated frequency-A-only two-grid profile, bounded HDF5 window reads, atomic
+scene checkpoints and unified assembly. See [profile and limits](nisar-preparation.md).
+V1 and other source profiles are unchanged. Historical counts below describe
+the earlier HLS update.
+
 An experimental fourteenth adapter, `hls_s30`, adds Earthdata COG access and
 local 50 m processing to unified delivery, without changing V1. See
 [HLS profile and limits](hls-preparation.md). The original thirteen adapters

@@ -7,6 +7,7 @@ from pathlib import Path
 from .archives import safe_relative
 
 SOURCE_COLUMNS = {
+    'nisar_gcov': 'nisar_gcov',
     'hls_s30': 'hls_s30',  # Extension only; absent V1 columns remain not processed.
     'srtm': 'srtm', 'hwsd2': 'hwsd2', 'mcd12q1': 'mcd12q1_lulc',
     'mod13q1_ndvi': 'mod13q1_ndvi', 'myd13q1_ndvi': 'myd13q1_ndvi',

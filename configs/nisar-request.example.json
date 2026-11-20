@@ -1,0 +1,8 @@
+{
+  "spatial": {"anchor_ids": ["EASE2_M09km_R0285_C3179"]},
+  "start": "2026-11-01",
+  "end": "2026-11-07",
+  "sources": ["nisar_gcov"],
+  "station_targets": "absent",
+  "output_root": "outputs/nisar-extension"
+}

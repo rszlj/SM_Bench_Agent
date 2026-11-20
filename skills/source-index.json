@@ -7,6 +7,14 @@
     "mcd12q1"
   ],
   "workflows": {
+    "nisar": {
+      "command": "sm-benchmark-prepare",
+      "guide": "docs/nisar-preparation.md",
+      "example": "configs/nisar-request.example.json",
+      "extra": "nisar",
+      "scope": "Validated GCOV frequency A only; one anchor/year; absent targets and reviewed contexts",
+      "requires_context": true
+    },
     "hls": {
       "command": "sm-benchmark-prepare",
       "guide": "docs/hls-preparation.md",
@@ -83,6 +91,12 @@
     }
   },
   "sources": {
+    "nisar_gcov": {
+      "skill": "skills/prepare-nisar-gcov/SKILL.md",
+      "profile_id": "nisar-gcov-validated-a-20m-100m-v1",
+      "workflow": "nisar",
+      "provider": "NASA Earthdata / ASF bounded HDF5 ranges"
+    },
     "hls_s30": {
       "skill": "skills/prepare-hls-s30/SKILL.md",
       "profile_id": "hls-s30-v2-50m-screened-v1",
@@ -177,6 +191,7 @@
     "example": "configs/multi-request.example.json",
     "scope": "one anchor/year; absent targets; selected dynamic sources and reviewed contexts",
     "sources": [
+      "nisar_gcov",
       "hls_s30",
       "gldas21",
       "mod13q1_ndvi",

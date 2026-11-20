@@ -87,6 +87,7 @@ def default_registry():
     from .smap_sources import SMAPL4Adapter
     from .smap_l3_adapter import SMAPL3Adapter
     from .hls_adapter import HLSAdapter
+    from .nisar_adapter import GCOVAdapter
     from .hls_resilience import ResilientEarthdataHLS
     registry = AdapterRegistry()
     registry.register(GLDAS21Adapter())
@@ -94,6 +95,7 @@ def default_registry():
     registry.register(SMAPL4Adapter())
     registry.register(SMAPL3Adapter())
     registry.register(HLSAdapter(provider=ResilientEarthdataHLS()))
+    registry.register(GCOVAdapter())
     for source in PROFILES:
         registry.register(ContextAdapter(source))
     for source in MODIS_PROFILES:

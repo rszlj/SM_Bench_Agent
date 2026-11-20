@@ -31,7 +31,7 @@ and configuration files. Python 3.11+ is a runtime requirement: if it is missing
 the agent helps you install it using a method appropriate for your computer.
 Agent software, network access and provider access remain prerequisites.
 
-The entry skill coordinates fourteen separate source skills and reads only those
+The entry skill coordinates fifteen separate source skills and reads only those
 needed for your request. Setup and delivery rules are shared; users still interact
 with one agent. See [skill organization](docs/skill-layout.md) for maintenance details.
 
@@ -72,6 +72,10 @@ shared agent instructions and source-specific skills.
 
 ### Implemented
 
+- Experimental [NISAR GCOV](docs/nisar-preparation.md): Validated frequency A,
+  bounded Earthdata window reads, 10/20 m to 20 m and 80 m to 100 m, scene
+  checkpoints and unified annual/date-scoped packaging. No B or V1 backfill.
+
 - Thirteen established source adapters: SRTM, HWSD2, MCD12Q1, GLDAS, ERA5-Land, IMERG,
   separate Terra/Aqua NDVI and LST, Sentinel-1, SMAP L4 v007 and SMAP L3 V006.
   L3 supplies native-cell AM/PM soil moisture and H/V brightness temperature
@@ -97,6 +101,11 @@ See [usage examples](docs/usage-examples.md),
 [Python environment handling](docs/python-environment.md).
 
 ### Verified
+
+- NISAR GCOV: real 10/20/80 m frequency-A window tests, default-adapter online
+  retrieval and network-blocked cache replay passed. Unified packaging of real
+  cached GCOV with synthetic contexts passed; 126 regression tests and the final
+  13 focused NISAR tests passed. See [scope and evidence](docs/nisar-development.md).
 
 - HLS S30 annual acceptance (2026-11-19): all 119 discovered 2022 granules at
   `EASE2_M09km_R0285_C3179` were processed and packaged. File checksums, grid,

@@ -59,3 +59,8 @@ Use `sm-benchmark-earthdata-check` offline, or `--online` only for an authorized
 login check. A mixed request's `credential_ref` remains the GEE configuration;
 the L3 adapter does not open it. Other-source and local-only work should not
 require Earthdata credentials.
+
+NISAR GCOV reuses this Earthdata `.netrc` entry. Install the `nisar` extra in
+the selected environment. No new account or GEE project is needed for GCOV;
+unified context prerequisites may separately use GEE. Follow
+[GCOV preparation](../../docs/nisar-preparation.md).
