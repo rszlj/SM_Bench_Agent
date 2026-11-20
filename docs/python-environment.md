@@ -39,8 +39,8 @@ conda env create --prefix ./.conda --file environment.yml
 
 Do not replace an existing environment to fix a failed solve. Diagnose the
 reported dependency conflict. The specification is a tested-development version
-set, not a universal platform lockfile; a clean solve still needs acceptance on
-the user's platform. Native GDAL must match its Python bindings. Avoid combining
+set, not a universal platform lockfile; compatibility still needs checking on
+platforms outside the tested setup. Native GDAL must match its Python bindings. Avoid combining
 unrelated GDAL DLLs or setting global GDAL_DATA/PROJ paths as a workaround.
 
 For catalogue-only or appropriately limited work, a `.venv` can be sufficient.
@@ -88,4 +88,8 @@ Model-host software such as Kimi CLI is separate from the scientific environment
 Tests cover explicit/saved/local precedence, missing paths, relocated checkouts,
 paths containing spaces, selected-interpreter probing and launching from outside
 the checkout. Full dependency diagnosis is exercised in the existing scientific
-environment. This does not establish a fresh Conda solve or Kimi model behavior.
+environment. Those particular tool tests do not establish a fresh Conda solve
+or Kimi model behavior. Separately, the maintainer confirmed on 2026-11-20 that
+fresh-environment and Kimi-based testing had been completed. Exact platform,
+model and version coverage is not yet attached to the public records, so the
+confirmation must not be generalized to every setup or newly added source.

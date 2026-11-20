@@ -4,8 +4,8 @@ An agent-assisted workflow for extending the Global Soil Moisture Benchmark to
 user-specified locations, periods and registered data sources.
 
 > **Development preview for external testing; not a stable release.**
-> One-location/month online checks have passed. Fresh-environment installation
-> and Kimi model-session acceptance remain pending. Start with a small request;
+> Fresh-environment and Kimi-based testing have been completed, alongside
+> the source-specific checks recorded below. Start with a small request;
 > see [examples](docs/usage-examples.md) and [environment setup](docs/python-environment.md).
 
 ## Start with your coding agent
@@ -42,7 +42,7 @@ configuration and completed work are reused where valid.
 
 Kimi Code uses the same tools and instructions. A small discovery entry is
 provided under `.agents/skills/sm-benchmark/`; see [Kimi setup and acceptance
-status](docs/kimi-code.md). No Kimi model session has yet been validated.
+status](docs/kimi-code.md).
 
 ### Example requests
 
@@ -102,6 +102,11 @@ See [usage examples](docs/usage-examples.md),
 
 ### Verified
 
+- Fresh-environment installation and Kimi-based agent testing have been completed
+  (maintainer confirmation, 2026-11-20). Exact tested versions/platforms and
+  source scope are not yet captured in the public acceptance records. This is
+  not a claim of universal platform or model compatibility.
+
 - NISAR GCOV: real 10/20/80 m frequency-A window tests, default-adapter online
   retrieval and network-blocked cache replay passed. Unified packaging of real
   cached GCOV with synthetic contexts passed; 126 regression tests and the final
@@ -136,10 +141,11 @@ model. Historical validation files retain their original code versions and scope
 
 ### Remaining limits
 
-- Fresh-environment installation, live context acquisition and a fully new-location
-  workflow including context preparation still need acceptance.
-- Kimi has a discovery entry and setup instructions, but no Kimi model session
-  has been validated. Tool-level tests are not cross-model behavioral evidence.
+- Acceptance remains case- and source-specific. New HLS/GCOV functionality and
+  untested platform/model combinations are not automatically covered by earlier
+  fresh-environment or Kimi tests.
+- A fully new-location workflow with all context sources acquired online has
+  not yet been documented in the public acceptance records.
 - Multi-anchor/year batch scheduling is not implemented. The agent splits
   cross-year date requests into per-year segments with matching contexts.
 - SMAP v007 live retrieval has passed for one month; equivalence of its legacy

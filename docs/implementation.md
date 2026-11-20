@@ -80,6 +80,12 @@ multi-source validation remains pending.
 
 ## Next acceptance gates
 
+Status correction (2026-11-20): the maintainer confirmed fresh-environment and
+Kimi-based testing is complete. Historical entries below retain their original
+scope; they must not be read as a current claim that no such tests have run.
+Public model/host/platform details and sanitized acceptance evidence remain to
+be recorded. Newly added adapters still require their own acceptance scope.
+
 HLS acceptance update (2026-11-19): one full 2022 anchor-year now passes live
 retrieval and annual archive verification (119 granules). The unified registry
 uses the tested bounded range-retry provider by default. This does not install

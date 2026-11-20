@@ -36,13 +36,16 @@ workflow. If using a Kimi model through another coding host, use that host's
 repository-instruction mechanism and record both host and model identities.
 The scientific Python tools remain independent of the language-model provider.
 
-## Acceptance status and next check
+## Acceptance status
 
-The discovery entry and local references have been checked. `kimi` was not found
-on PATH during the compatibility review on 2026-11-08; no Kimi model session was
-run. Existing Python tests and GEE acceptance do not establish Kimi agent behavior.
+The maintainer confirmed on 2026-11-20 that Kimi-based agent testing has been
+completed. The earlier 2026-11-08 compatibility review did not run a Kimi session;
+that historical result no longer describes current overall test status.
+Exact model/host versions, tested tasks and sanitized session evidence have not
+yet been added to the public acceptance records. Do not infer that every new
+source or model/platform combination was tested.
 
-For the first Kimi session, ask it to read the entry and explain an exact-date,
+For additional Kimi regression sessions, ask it to read the entry and explain an exact-date,
 station-free request without contacting providers. Check that it selects the
 correct source skills, uses the unified date-range command and identifies needed
 contexts. Then test an authorized cached or bounded online request and recovery.
